@@ -30,6 +30,15 @@ create_database(cursor)
 # Seleccionar la base de datos
 cursor.execute("USE {}".format(DB_NAME))
 
+# Eliminar la tabla de documentación si ya existe
+def drop_table_if_exists(cursor, table_name):
+    try:
+        cursor.execute("DROP TABLE IF EXISTS {}".format(table_name))
+    except mysql.connector.Error as err:
+        print("Error dropping table {}: {}".format(table_name, err))
+
+drop_table_if_exists(cursor, 'documentation')
+
 # Crear la tabla de documentación
 TABLES = {}
 TABLES['documentation'] = (
@@ -37,6 +46,7 @@ TABLES['documentation'] = (
     "  `id` int(11) NOT NULL AUTO_INCREMENT,"
     "  `endpoint` varchar(255) NOT NULL,"
     "  `description` varchar(255) NOT NULL,"
+    "  `body` text,"
     "  PRIMARY KEY (`id`)"
     ") ENGINE=InnoDB")
 
