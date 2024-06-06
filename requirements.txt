@@ -1,3 +1,10 @@
 Flask
 mysql-connector-python
 python-dotenv
+spacy
+beautifulsoup4
+requests
+pymongo
+pandas
+matplotlib
+jinja2
