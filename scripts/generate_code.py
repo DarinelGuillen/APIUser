@@ -27,7 +27,7 @@ template_str = """
 import requests
 
 def {{ method_name }}({{ params }}{{ body_param }}):
-    url = '{{ url }}'
+    url = f'http://127.0.0.1:5000{{ endpoint_path }}'
     {{ body_data }}
     response = requests.{{ http_method }}(url{{ body_pass }})
     return response.json()
@@ -53,11 +53,10 @@ file_path = os.path.join(output_dir, file_name)
 with open(file_path, 'w', encoding='utf-8') as f:
     for doc in docs:
         endpoint, description, body = doc
-        endpoint_path = endpoint.split(' ')[1]
+        endpoint_path = endpoint.split(' ')[1].replace('{id}', '{id}')
         method_name = endpoint_path.split('/')[1] + '_users'
         params = 'id' if '{id}' in endpoint else ''
         body_param = 'data=None' if body else ''
-        url = f"http://127.0.0.1:5000{endpoint_path.replace('{id}', '{id}')}"
         http_method = endpoint.split(' ')[0].lower()
         body_data = f'data = {body}' if body else ''
         body_pass = ', json=data' if body else ''
@@ -67,7 +66,7 @@ with open(file_path, 'w', encoding='utf-8') as f:
         code = template.render(
             method_name=method_name,
             params=params,
-            url=url,
+            endpoint_path=endpoint_path,
             http_method=http_method,
             body_param=(', ' + body_param) if params and body_param else body_param,
             body_data=body_data,

@@ -4,6 +4,10 @@ from dotenv import load_dotenv
 import mysql.connector
 from endpoint.get_users import get_users_route
 from endpoint.create_user import create_user_route
+from endpoint.get_user_by_id import get_user_by_id_route
+# from endpoint.put_user_by_id import put_user_by_id_route
+# from endpoint.delete_user_by_id import delete_user_by_id_route
+# from endpoint.patch_user_by_id import patch_user_by_id_route
 
 # Cargar variables de entorno desde el archivo .env
 load_dotenv()
@@ -41,6 +45,10 @@ app.config['GET_DB_CONNECTION'] = get_db_connection
 # Registrar las rutas
 app.register_blueprint(get_users_route)
 app.register_blueprint(create_user_route)
+app.register_blueprint(get_user_by_id_route)
+# app.register_blueprint(put_user_by_id_route)
+# app.register_blueprint(delete_user_by_id_route)
+# app.register_blueprint(patch_user_by_id_route)
 
 if __name__ == '__main__':
     app.run(debug=True)

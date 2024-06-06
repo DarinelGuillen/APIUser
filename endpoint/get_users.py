@@ -1,3 +1,6 @@
+# Endpoint: GET /users
+# Description: Retrieves a list of users.
+
 from flask import Blueprint, jsonify, current_app
 
 get_users_route = Blueprint('get_users_route', __name__)

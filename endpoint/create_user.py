@@ -1,3 +1,7 @@
+# Endpoint: POST /users
+# Description: Creates a new user.
+# Body: {"name": "John Doe"}
+
 from flask import Blueprint, request, jsonify, current_app
 
 create_user_route = Blueprint('create_user_route', __name__)
