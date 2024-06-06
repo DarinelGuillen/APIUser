@@ -1,0 +1,10 @@
+# Ignorar directorio de entorno virtual
+venv/
+
+# Ignorar archivos específicos
+.env
+.vscode/
+
+# Ignorar archivos generados
+__pycache__/
+*.pyc
