@@ -8,3 +8,6 @@ os.system('python scripts/store_docs.py')
 
 # Ejecutar generate_code.py para generar el código de ejemplo actualizado
 os.system('python scripts/generate_code.py')
+
+# Ejecutar monitor_docs.py para mostrar los endpoints actuales
+os.system('python scripts/generate_reports.py')

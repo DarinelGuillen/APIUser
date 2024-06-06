@@ -1,16 +1,14 @@
-
 import requests
+
 
 def users_users():
     url = f'http://127.0.0.1:5000/users'
-
+    
     response = requests.get(url)
     return response.json()
 
 # Ejemplo de uso
 print(users_users())
-
-
 
 
 def users_users(data=None):
@@ -23,14 +21,12 @@ def users_users(data=None):
 print(users_users(data={"name": "John Doe"}))
 
 
-
-
 def users_users(id):
     url = f'http://127.0.0.1:5000/users/{id}'
-
+    
     response = requests.get(url)
     return response.json()
 
 # Ejemplo de uso
-print(users_users(id=7))
+print(users_users(id=1))
 

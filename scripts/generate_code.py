@@ -22,10 +22,8 @@ query = "SELECT endpoint, description, body FROM documentation"
 cursor.execute(query)
 docs = cursor.fetchall()
 
-# Plantilla de Jinja2
+# Plantilla de Jinja2 sin import requests
 template_str = """
-import requests
-
 def {{ method_name }}({{ params }}{{ body_param }}):
     url = f'http://127.0.0.1:5000{{ endpoint_path }}'
     {{ body_data }}
@@ -51,6 +49,9 @@ current_time = datetime.now().strftime("%d-%B-%Y_%H-horas")
 file_name = f"Code_Examples_{current_time}.py"
 file_path = os.path.join(output_dir, file_name)
 with open(file_path, 'w', encoding='utf-8') as f:
+    # Escribir import requests una sola vez al principio del archivo
+    f.write("import requests\n\n")
+
     for doc in docs:
         endpoint, description, body = doc
         endpoint_path = endpoint.split(' ')[1].replace('{id}', '{id}')
