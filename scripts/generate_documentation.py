@@ -23,6 +23,7 @@ def generate_documentation(endpoint_info):
     2. Ejemplos de solicitudes y respuestas.
     3. Descripción de los parámetros y sus tipos.
     4. Posibles códigos de error y sus significados.
+    5. reportes de hallazgos: Informar sobre oportunidades, riesgos y limitaciones.
     """
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
@@ -59,7 +60,7 @@ def extract_endpoint_info(content):
         return {'method': method, 'path': path, 'description': description, 'body': body}
     return None
 
-def update_documentation(endpoints, doc_file):
+def update_documentation(endpoints, doc_file, txt_file):
     with open(doc_file, 'r', encoding='utf-8') as f:
         content = f.read()
 
@@ -68,21 +69,28 @@ def update_documentation(endpoints, doc_file):
     ul = soup.find('ul')
     ul.clear()
 
+    documentation_text = ""
+
     for endpoint in endpoints:
         doc_detail = generate_documentation(endpoint)
         li = soup.new_tag('li')
         li.string = f"{endpoint['method']} {endpoint['path']} - {endpoint['description']} Body: {endpoint['body']}"
         ul.append(li)
+        documentation_text += doc_detail + "\n\n"
 
     with open(doc_file, 'w', encoding='utf-8') as f:
         f.write(str(soup))
 
+    with open(txt_file, 'w', encoding='utf-8') as f:
+        f.write(documentation_text)
+
 def main():
     endpoints_dir = 'C:\\Users\\darin\\Documents\\8B\\LAB Reto\\APIUser\\endpoint'
     doc_file = 'C:\\Users\\darin\\Documents\\8B\\LAB Reto\\APIUser\\data\\index.html'
+    txt_file = 'C:\\Users\\darin\\Documents\\8B\\LAB Reto\\APIUser\\data\\documentation.txt'
 
     endpoints = read_endpoints(endpoints_dir)
-    update_documentation(endpoints, doc_file)
+    update_documentation(endpoints, doc_file, txt_file)
     print("Documentación generada y actualizada con éxito.")
 
 if __name__ == "__main__":

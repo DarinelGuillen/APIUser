@@ -1,0 +1,194 @@
+# Documentación Técnica del Endpoint 
+
+## Descripción del Endpoint
+Este endpoint **POST /users** se utiliza para crear un nuevo usuario en el sistema. Se espera que se envíen los datos del usuario en el cuerpo de la solicitud en formato JSON.
+
+## Ejemplos de Solicitudes y Respuestas
+
+### Solicitud de Ejemplo
+```json
+POST /users
+{
+    "name": "John Doe",
+    "email": "john.doe@example.com"
+}
+```
+
+### Respuesta de Ejemplo
+```json
+{
+    "message": "User created successfully",
+    "userId": "12345"
+}
+```
+
+## Descripción de Parámetros y Tipos
+Este endpoint no requiere parámetros en la URL ya que todos los datos necesarios se envían en el cuerpo de la solicitud en formato JSON. Los parámetros requeridos en el cuerpo de la solicitud son:
+- **name** (string): El nombre del usuario a crear.
+- **email** (string): El correo electrónico del usuario a crear.
+
+## Posibles Códigos de Error y Significados
+- **400 Bad Request**: Se devolverá si la solicitud enviada no cumple con el formato esperado.
+- **401 Unauthorized**: Se devolverá si el usuario no tiene permisos para realizar la acción.
+- **500 Internal Server Error**: Se devolverá si ocurre un error interno en el servidor al intentar crear el usuario.
+
+## Reporte de Hallazgos
+
+### Oportunidades
+- Incluir validaciones en el servidor para los datos recibidos en la solicitud.
+- Enviar una respuesta más detallada en caso de errores o fallos en la creación del usuario.
+
+### Riesgos
+- Exponer la API a posibles ataques si no se aplican medidas de seguridad adecuadas en la creación de usuarios.
+
+### Limitaciones
+- Este endpoint solo permite la creación de un usuario a la vez y no admite la creación de varios usuarios en una sola solicitud.
+
+Esta documentación proporciona una guía técnica completa para el uso correcto del endpoint **POST /users** en la API, incluyendo ejemplos, descripción de parámetros, posibles códigos de error y reporte de hallazgos.
+
+## Documentación Técnica del Endpoint de API
+
+### Descripción del Endpoint:
+
+**Método:** DELETE  
+**Ruta:** /users/{id}  
+**Descripción:** Elimina un usuario específico por su ID.  
+**Parámetros:** No aplica.  
+**Cuerpo:** Ninguno.
+
+### Ejemplos de Solicitudes y Respuestas:
+
+#### Solicitud:
+```
+DELETE /users/123
+```
+
+#### Respuesta Exitosa (Código 200):
+```
+{
+    "message": "User with ID 123 has been successfully deleted."
+}
+```
+
+#### Respuesta de Error (Código 404 - Not Found):
+```
+{
+    "error": "User with ID 123 not found."
+}
+```
+
+### Descripción de los Parámetros y sus Tipos:
+- **{id}** (ruta): Identificador único del usuario que se desea eliminar. Tipo: Integer.
+
+### Posibles Códigos de Error y Significados:
+- **404 Not Found:** Se devuelve cuando el usuario con el ID especificado no se encuentra en la base de datos.
+- **500 Internal Server Error:** Se puede devolver en caso de problemas internos en el servidor al intentar eliminar al usuario.
+
+### Reporte de Hallazgos:
+
+#### Oportunidades:
+- **Seguridad:** Asegurarse de que solo usuarios autorizados puedan acceder a este endpoint.
+- **Registro de Actividad:** Registrar las eliminaciones de usuarios para tener un trazado de auditoría.
+
+#### Riesgos:
+- **Eliminación Errónea:** No contar con una confirmación adicional antes de eliminar a un usuario puede llevar a eliminaciones accidentales.
+
+#### Limitaciones:
+- **Identificación del Usuario:** Solo se puede eliminar usuarios a través de su ID. No se permite la eliminación basada en otros criterios.
+
+Esta documentación técnica proporciona información detallada sobre el endpoint de la API DELETE /users/{id} para garantizar su correcto uso y comprensión.
+
+### Documentación Técnica del Endpoint /users
+
+1. **Descripción del Endpoint:**  
+   Este endpoint permite recuperar una lista de usuarios registrados en el sistema.
+
+2. **Ejemplos de Solicitudes y Respuestas:**
+
+   - **Solicitud:**
+     ```
+     GET /users
+     ```
+
+   - **Respuesta Exitosa (200 OK):**
+     ```json
+     {
+         "users": [
+             {
+                 "id": 1,
+                 "name": "John Doe",
+                 "email": "johndoe@example.com"
+             },
+             {
+                 "id": 2,
+                 "name": "Alice Smith",
+                 "email": "alicesmith@example.com"
+             }
+         ]
+     }
+     ```
+
+3. **Parámetros:**  
+   - No se requieren parámetros para esta solicitud.
+
+4. **Posibles Códigos de Error y Significados:**
+   - 200 OK: La solicitud se completó con éxito.
+   - 400 Bad Request: Error en la solicitud realizada por el cliente.
+   - 401 Unauthorized: El cliente necesita autenticarse para acceder al recurso.
+   - 500 Internal Server Error: Error en el servidor que impide procesar la solicitud.
+
+5. **Reporte de Hallazgos:**
+   - **Oportunidades:**  
+     - Se podrían incluir parámetros de filtrado para limitar la lista de usuarios devuelta.
+   - **Riesgos:**  
+     - Exposición de información sensible si no se maneja de forma segura.
+   - **Limitaciones:**  
+     - La lista de usuarios devuelta podría ser extensa si hay muchos usuarios registrados.
+
+Con esta información, los desarrolladores podrán utilizar el endpoint /users de forma efectiva para obtener la lista de usuarios del sistema.
+
+## Documentación Técnica - Endpoint API
+
+### Descripción del Endpoint
+Este endpoint permite recuperar información de un usuario específico dado su ID.
+
+### Ejemplo de Solicitudes y Respuestas
+
+#### Solicitud:
+```
+GET /users/123
+```
+
+#### Respuesta Exitosa:
+```json
+{
+    "id": 123,
+    "name": "John Doe",
+    "email": "johndoe@example.com"
+}
+```
+
+#### Respuesta de Error (404 - Not Found):
+```json
+{
+    "error": "User not found"
+}
+```
+
+### Parámetros
+- **id** (path parameter) - ID del usuario a recuperar. Debe ser un valor numérico entero.
+
+### Posibles Códigos de Error
+- **404 Not Found**: Se devuelve cuando el usuario con el ID especificado no es encontrado.
+- **400 Bad Request**: Se puede devolver si la solicitud no cumple con el formato esperado.
+
+### Reportes de Hallazgos
+- **Oportunidades**: 
+    - Implementar paginación para manejar grandes cantidades de usuarios.
+- **Riesgos**:
+    - La falta de autenticación de los usuarios podría exponer información sensible.
+- **Limitaciones**:
+    - Actualmente, el endpoint solo permite la búsqueda por ID, sin opciones de filtrado adicional.
+
+Esta documentación técnica proporciona una visión general del endpoint /users/{id} de la API, incluyendo su descripción, ejemplos de solicitudes y respuestas, parámetros, códigos de error posibles, y reportes de hallazgos que pueden ayudar en el desarrollo y mejora continua de la funcionalidad del endpoint.
+
