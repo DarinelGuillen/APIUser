@@ -1,5 +1,7 @@
 # Endpoint: GET /users/{id}
-# Description: Retrieves a specific user by ID.
+# Description: Retrieves a user by their ID.
+# Body: None
+
 
 from flask import Blueprint, jsonify, current_app, request
 

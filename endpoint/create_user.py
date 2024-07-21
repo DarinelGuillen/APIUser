@@ -1,6 +1,7 @@
 # Endpoint: POST /users
 # Description: Creates a new user.
-# Body: {"name": "John Doe"}
+# Body: {"name": "John Doe", "email": "john.doe@example.com"}
+
 
 from flask import Blueprint, request, jsonify, current_app
 

@@ -127,3 +127,20 @@ crontab -e
 0 0 * * * /path/to/venv/bin/python /path/to/your/project/main.py
 
 ```
+
+
+## Integración con ChatGPT
+
+Para mejorar la automatización de la documentación técnica, hemos integrado ChatGPT para generar descripciones detalladas de los endpoints de las APIs.
+
+## Scripts
+
+### generate_documentation.py
+
+- **Función**: Utiliza ChatGPT para generar documentación técnica detallada de los endpoints de la API basándose en descripciones básicas.
+    
+- **Uso**: Ejecuta este script para generar documentación automáticamente.
+    
+- **Ejemplo de Ejecución**:
+
+

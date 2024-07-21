@@ -3,30 +3,70 @@ import re
 from bs4 import BeautifulSoup
 
 # Directorio de endpoints
-endpoints_dir = 'C:\\Users\\darin\\Documents\\LAB Reto\\APIUser\\endpoint'
+endpoints_dir = 'C:\\Users\\darin\\Documents\\8B\\LAB Reto\\APIUser\\endpoint'
 
 # Archivo de documentación
-doc_file = 'C:\\Users\\darin\\Documents\\LAB Reto\\APIUser\\data\\index.html'
+doc_file = 'C:\\Users\\darin\\Documents\\8B\\LAB Reto\\APIUser\\data\\index.html'
+
+# Crear directorios si no existen
+if not os.path.exists(endpoints_dir):
+    os.makedirs(endpoints_dir)
+
+if not os.path.exists(os.path.dirname(doc_file)):
+    os.makedirs(os.path.dirname(doc_file))
+
+# Crear el archivo HTML inicial si no existe
+if not os.path.exists(doc_file):
+    with open(doc_file, 'w', encoding='utf-8') as f:
+        f.write('''<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+</head>
+<body>
+    <h1>API Documentation</h1>
+    <ul>
+        <!-- Los endpoints se añadirán aquí -->
+    </ul>
+</body>
+</html>''')
 
 # Leer los archivos de endpoint
 def read_endpoints(directory):
     endpoints = []
+    print(f"Leyendo directorio: {directory}")
+    if not os.path.exists(directory):
+        print(f"El directorio {directory} no existe.")
+        return endpoints
+
     for filename in os.listdir(directory):
+        print(f"Encontrado archivo: {filename}")
         if filename.endswith('.py'):
             filepath = os.path.join(directory, filename)
+            print(f"Leyendo archivo: {filepath}")
             with open(filepath, 'r', encoding='utf-8') as f:
                 content = f.read()
+                print(f"Contenido del archivo:\n{content}\n")
                 # Extraer información del endpoint
                 endpoint = extract_endpoint_info(content)
                 if endpoint:
                     endpoints.append(endpoint)
+                else:
+                    print(f"No se encontró información del endpoint en el archivo: {filename}")
+    print(f"Endpoints encontrados: {endpoints}")
     return endpoints
 
-# Extraer información del endpoint
 def extract_endpoint_info(content):
+    print(f"Extrayendo información del contenido:\n{content}\n")
     endpoint_match = re.search(r'#\s*Endpoint:\s*(GET|POST|PATCH|DELETE)\s*(/\S+)', content)
     description_match = re.search(r'#\s*Description:\s*(.+)', content)
     body_match = re.search(r'#\s*Body:\s*(.+)', content)
+
+    print(f"endpoint_match: {endpoint_match}")
+    print(f"description_match: {description_match}")
+    print(f"body_match: {body_match}")
 
     if endpoint_match and description_match:
         method = endpoint_match.group(1)
